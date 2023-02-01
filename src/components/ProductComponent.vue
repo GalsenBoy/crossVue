@@ -11,8 +11,11 @@
         placeholder="ordinateur"
         aria-label="ordinateur"
         aria-describedby="basic-addon1"
+        v-model="key_word"
+        @input="search"
       />
     </div>
+    <p>{{ key_word }}</p>
     <table class="table">
       <thead>
         <tr>
@@ -58,7 +61,7 @@ export default {
     return {
       products: [
         { id: 1, name: "ordinateur", price: 360, promotion: true },
-        { id: 2, name: "testla", price: 100360, promotion: false },
+        { id: 2, name: "tesla", price: 100360, promotion: false },
         { id: 3, name: "trotinette", price: 699, promotion: true },
         { id: 4, name: "iphone", price: 1199, promotion: false },
         { id: 5, name: "samsung", price: 899, promotion: false },
@@ -67,12 +70,21 @@ export default {
         { id: 8, name: "mac", price: 2500, promotion: false },
       ],
       selected: null,
+      products_filtre: [],
+      key_word: "",
     };
   },
   methods: {
     reversePromo(product) {
       this.selected = this.products.find((item) => item.id === product.id);
       this.selected.promotion = !this.selected.promotion;
+    },
+
+    search() {
+      this.products_filtre = this.products.filter((f) =>
+        f.name.includes(this.key_word)
+      );
+      this.products = this.products_filtre;
     },
   },
 };
