@@ -25,13 +25,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
+        <tr v-for="(product, index) in products" :key="index">
+          <th scope="row">{{ product.id }}</th>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>
+            <span v-if="product.promotion"
+              ><i class="bi bi-heart-fill text-success"></i
+            ></span>
+          </td>
           <td>@mdo</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
+          <td>
+            <span><i class="bi bi-trash-fill text-danger"></i></span>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -39,7 +45,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      products: [
+        { id: 1, name: "ordinateur", price: 360, promotion: true },
+        { id: 2, name: "testla", price: 100360, promotion: false },
+        { id: 3, name: "trotinette", price: 699, promotion: true },
+        { id: 4, name: "iphone", price: 1199, promotion: false },
+        { id: 5, name: "samsung", price: 899, promotion: false },
+        { id: 6, name: "télévision", price: 700, promotion: true },
+        { id: 7, name: "tondeuse", price: 90, promotion: true },
+        { id: 8, name: "mac", price: 2500, promotion: false },
+      ],
+    };
+  },
+};
 </script>
 
 <style>
