@@ -28,13 +28,21 @@
         <tr v-for="(product, index) in products" :key="index">
           <th scope="row">{{ product.id }}</th>
           <td>{{ product.name }}</td>
-          <td>{{ product.price }}</td>
+          <td>{{ product.price }} €</td>
           <td>
             <span v-if="product.promotion"
               ><i class="bi bi-heart-fill text-success"></i
             ></span>
           </td>
-          <td>@mdo</td>
+          <td>
+            <button
+              :class="product.promotion ? 'btn btn-success' : 'btn btn-danger'"
+              @click="reversePromo(product)"
+            >
+              <span v-if="product.promotion">En promo</span>
+              <span v-if="!product.promotion">Pas en promo</span>
+            </button>
+          </td>
           <td>
             <span><i class="bi bi-trash-fill text-danger"></i></span>
           </td>
@@ -58,10 +66,20 @@ export default {
         { id: 7, name: "tondeuse", price: 90, promotion: true },
         { id: 8, name: "mac", price: 2500, promotion: false },
       ],
+      selected: null,
     };
+  },
+  methods: {
+    reversePromo(product) {
+      this.selected = this.products.find((item) => item.id === product.id);
+      this.selected.promotion = !this.selected.promotion;
+    },
   },
 };
 </script>
 
 <style>
+.bi-trash-fill {
+  font-size: 1.5rem;
+}
 </style>
