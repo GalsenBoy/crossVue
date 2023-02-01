@@ -34,7 +34,14 @@
               ><i class="bi bi-heart-fill text-success"></i
             ></span>
           </td>
-          <td>@mdo</td>
+          <td>
+            <button
+              :class="product.promotion ? 'btn btn-success' : 'btn btn-danger'"
+            >
+              <span v-if="product.promotion">En promo</span>
+              <span v-if="!product.promotion">Pas en promo</span>
+            </button>
+          </td>
           <td>
             <span><i class="bi bi-trash-fill text-danger"></i></span>
           </td>
