@@ -12,7 +12,7 @@
         aria-label="ordinateur"
         aria-describedby="basic-addon1"
         v-model="key_word"
-        @input="search"
+        @input="search_product()"
       />
     </div>
     <p>{{ key_word }}</p>
@@ -39,15 +39,17 @@
           </td>
           <td>
             <button
-              :class="product.promotion ? 'btn btn-success' : 'btn btn-danger'"
+              :class="product.promotion ? 'btn btn-danger' : 'btn btn-success'"
               @click="reversePromo(product)"
             >
-              <span v-if="product.promotion">En promo</span>
-              <span v-if="!product.promotion">Pas en promo</span>
+              <span v-if="product.promotion"> Enlever la promo</span>
+              <span v-if="!product.promotion">Mettre en promo</span>
             </button>
           </td>
           <td>
-            <span><i class="bi bi-trash-fill text-danger"></i></span>
+            <button class="btn btn-danger" @click="delete_product(index)">
+              <i class="bi bi-trash-fill"></i>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -72,6 +74,7 @@ export default {
       selected: null,
       products_filtre: [],
       key_word: "",
+      id: 0,
     };
   },
   methods: {
@@ -80,11 +83,16 @@ export default {
       this.selected.promotion = !this.selected.promotion;
     },
 
-    search() {
+    search_product() {
+      this.key_word.toLowerCase;
       this.products_filtre = this.products.filter((f) =>
         f.name.includes(this.key_word)
       );
       this.products = this.products_filtre;
+    },
+    delete_product(index) {
+      this.id = this.products.indexOf(index);
+      console.log(this.id);
     },
   },
 };
