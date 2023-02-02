@@ -74,7 +74,7 @@ export default {
       selected: null,
       products_filtre: [],
       key_word: "",
-      id: null,
+      id: 0,
     };
   },
   methods: {
@@ -85,9 +85,8 @@ export default {
 
     delete_product(index) {
       this.id = this.products.indexOf(index);
-      if (index > -1) {
-        this.products.splice(index, 1);
-      }
+      console.log(this.id);
+      this.products.splice(index, 1);
     },
 
     search_product() {
