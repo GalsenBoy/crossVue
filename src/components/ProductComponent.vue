@@ -12,7 +12,6 @@
         aria-label="ordinateur"
         aria-describedby="basic-addon1"
         v-model="key_word"
-        @input="search_product()"
       />
     </div>
     <p>{{ key_word }}</p>
@@ -28,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(product, index) in products" :key="index">
+        <tr v-for="(product, index) in filteredProducts" :key="index">
           <th scope="row">{{ product.id }}</th>
           <td>{{ product.name }}</td>
           <td>{{ product.price }} €</td>
@@ -74,27 +73,33 @@ export default {
       selected: null,
       products_filtre: [],
       key_word: "",
-      id: 0,
     };
   },
   methods: {
     reversePromo(product) {
       this.selected = this.products.find((item) => item.id === product.id);
+      // console.log(this.selected);
       this.selected.promotion = !this.selected.promotion;
     },
 
     delete_product(index) {
-      this.id = this.products.indexOf(index);
-      console.log(this.id);
+      // console.log(index);
       this.products.splice(index, 1);
     },
 
-    search_product() {
-      this.key_word.toLowerCase;
-      this.products_filtre = this.products.filter((f) =>
-        f.name.includes(this.key_word)
-      );
-      this.products = this.products_filtre;
+    // search_product() {
+    //   this.key_word.toLowerCase;
+    //   this.products_filtre = this.products.filter((f) =>
+    //     f.name.includes(this.key_word)
+    //   );
+    //   this.products = this.products_filtre;
+    // },
+  },
+  computed: {
+    filteredProducts() {
+      return this.products.filter((product) => {
+        return product.name.toLowerCase().includes(this.key_word.toLowerCase());
+      });
     },
   },
 };
