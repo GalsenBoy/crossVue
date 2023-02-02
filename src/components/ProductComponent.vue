@@ -83,16 +83,18 @@ export default {
       this.selected.promotion = !this.selected.promotion;
     },
 
+    delete_product(index) {
+      this.id = this.products.indexOf(index);
+      console.log(this.id);
+      this.products.splice(index, 1);
+    },
+
     search_product() {
       this.key_word.toLowerCase;
       this.products_filtre = this.products.filter((f) =>
         f.name.includes(this.key_word)
       );
       this.products = this.products_filtre;
-    },
-    delete_product(index) {
-      this.id = this.products.indexOf(index);
-      console.log(this.id);
     },
   },
 };
