@@ -15,44 +15,48 @@
       />
     </div>
     <p>{{ key_word }}</p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Nom</th>
-          <th scope="col">Prix</th>
-          <th scope="col">Promotion</th>
-          <th scope="col">En Promotion</th>
-          <th scope="col">Supprimer le produit</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(product, index) in filteredProducts" :key="index">
-          <th scope="row">{{ product.id }}</th>
-          <td>{{ product.name }}</td>
-          <td>{{ product.price }} €</td>
-          <td>
-            <span v-if="product.promotion"
-              ><i class="bi bi-heart-fill text-success"></i
-            ></span>
-          </td>
-          <td>
-            <button
-              :class="product.promotion ? 'btn btn-danger' : 'btn btn-success'"
-              @click="reversePromo(product)"
-            >
-              <span v-if="product.promotion"> Enlever la promo</span>
-              <span v-if="!product.promotion">Mettre en promo</span>
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-danger" @click="delete_product(index)">
-              <i class="bi bi-trash-fill"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Promotion</th>
+            <th scope="col">En Promotion</th>
+            <th scope="col">Supprimer le produit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(product, index) in filteredProducts" :key="index">
+            <th scope="row">{{ product.id }}</th>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }} €</td>
+            <td>
+              <span v-if="product.promotion"
+                ><i class="bi bi-heart-fill text-success"></i
+              ></span>
+            </td>
+            <td>
+              <button
+                :class="
+                  product.promotion ? 'btn btn-danger' : 'btn btn-success'
+                "
+                @click="reversePromo(product)"
+              >
+                <span v-if="product.promotion"> Enlever la promo</span>
+                <span v-if="!product.promotion">Mettre en promo</span>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger" @click="delete_product(index)">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
