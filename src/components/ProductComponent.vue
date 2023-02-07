@@ -14,48 +14,76 @@
         v-model="key_word"
       />
     </div>
-    <p>{{ key_word }}</p>
-    <div class="container">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prix</th>
-            <th scope="col">Promotion</th>
-            <th scope="col">En Promotion</th>
-            <th scope="col">Supprimer le produit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(product, index) in filteredProducts" :key="index">
-            <th scope="row">{{ product.id }}</th>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }} €</td>
-            <td>
-              <span v-if="product.promotion"
-                ><i class="bi bi-heart-fill text-success"></i
-              ></span>
-            </td>
-            <td>
-              <button
-                :class="
-                  product.promotion ? 'btn btn-danger' : 'btn btn-success'
-                "
-                @click="reversePromo(product)"
-              >
-                <span v-if="product.promotion"> Enlever la promo</span>
-                <span v-if="!product.promotion">Mettre en promo</span>
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-danger" @click="delete_product(index)">
-                <i class="bi bi-trash-fill"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nom</th>
+          <th scope="col">Prix</th>
+          <th scope="col">Promotion</th>
+          <th scope="col">En Promotion</th>
+          <th scope="col">Supprimer le produit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(product, index) in filteredProducts" :key="index">
+          <th scope="row">{{ product.id }}</th>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }} €</td>
+          <td>
+            <span v-if="product.promotion"
+              ><i class="bi bi-heart-fill text-success"></i
+            ></span>
+          </td>
+          <td>
+            <button
+              :class="product.promotion ? 'btn btn-danger' : 'btn btn-success'"
+              @click="reversePromo(product)"
+            >
+              <span v-if="product.promotion"> Enlever la promo</span>
+              <span v-if="!product.promotion">Mettre en promo</span>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger" @click="delete_product(index)">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <form action="" @submit="on_submit($event)">
+        <div>
+          <label for="">Identifiant</label><input v-model="id" type="number" />
+        </div>
+        <div>
+          <label for="">Article</label> <input type="text" v-model="article" />
+        </div>
+        <div>
+          <label for="">Prix</label> <input type="number" v-model="price" />
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="contactChoice1"
+            name="contact"
+            value="true"
+            v-model="promo"
+          />
+          <label for="contactChoice1">Mettre en promo</label>
+          <input
+            type="radio"
+            id="contactChoice2"
+            name="contact"
+            value="false"
+            v-model="promo"
+          />
+          <label for="contactChoice2">Ne pas mettre en promo</label>
+          <button class="btn btn-info">Ajouter le produit</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -77,6 +105,10 @@ export default {
       selected: null,
       products_filtre: [],
       key_word: "",
+      id: "",
+      article: "",
+      price: "",
+      promo: "",
     };
   },
   methods: {
@@ -90,14 +122,20 @@ export default {
       // console.log(index);
       this.products.splice(index, 1);
     },
-
-    // search_product() {
-    //   this.key_word.toLowerCase;
-    //   this.products_filtre = this.products.filter((f) =>
-    //     f.name.includes(this.key_word)
-    //   );
-    //   this.products = this.products_filtre;
-    // },
+    on_submit(e) {
+      for (const product of this.products) {
+        if (product.id == this.id) {
+          e.preventDefault();
+          alert("Cet identifiant existe déjà veuillez en chosir un autre");
+        }
+      }
+      for (const product of this.products) {
+        if (product.name == this.article) {
+          e.preventDefault();
+          alert("Cet article existe déjà veuillez rajouter un autre");
+        }
+      }
+    },
   },
   computed: {
     filteredProducts() {
