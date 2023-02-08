@@ -56,13 +56,16 @@
     <div>
       <form action="" @submit="on_submit($event)">
         <div>
-          <label for="">Identifiant</label><input v-model="id" type="number" />
+          <label for="">Identifiant</label
+          ><input v-model="form.id" type="number" />
         </div>
         <div>
-          <label for="">Article</label> <input type="text" v-model="article" />
+          <label for="">Article</label>
+          <input type="text" v-model="form.name" />
         </div>
         <div>
-          <label for="">Prix</label> <input type="number" v-model="price" />
+          <label for="">Prix</label>
+          <input type="number" v-model="form.price" />
         </div>
         <div>
           <input
@@ -70,15 +73,15 @@
             id="contactChoice1"
             name="contact"
             value="true"
-            v-model="promo"
+            v-model="form.promotion"
           />
           <label for="contactChoice1">Mettre en promo</label>
           <input
             type="radio"
             id="contactChoice2"
             name="contact"
-            value="false"
-            v-model="promo"
+            value="boolean"
+            v-model="form.promotion"
           />
           <label for="contactChoice2">Ne pas mettre en promo</label>
           <button class="btn btn-info">Ajouter le produit</button>
@@ -105,10 +108,12 @@ export default {
       selected: null,
       products_filtre: [],
       key_word: "",
-      id: "",
-      article: "",
-      price: "",
-      promo: "",
+      form: {
+        id: "",
+        name: "",
+        price: "",
+        promotion: "",
+      },
     };
   },
   methods: {
@@ -124,17 +129,28 @@ export default {
     },
     on_submit(e) {
       for (const product of this.products) {
-        if (product.id == this.id) {
+        if (product.id == this.form.id) {
           e.preventDefault();
           alert("Cet identifiant existe déjà veuillez en chosir un autre");
         }
       }
       for (const product of this.products) {
-        if (product.name == this.article) {
+        if (product.name == this.form.name) {
           e.preventDefault();
           alert("Cet article existe déjà veuillez rajouter un autre");
         }
       }
+      if (
+        this.form.id == "" ||
+        this.form.name == "" ||
+        this.form.price == "" ||
+        this.form.promotion == ""
+      ) {
+        e.preventDefault();
+        alert("Tous les champs doivent être remplis");
+      }
+
+      this.products.push(this.form);
     },
   },
   computed: {
