@@ -67,24 +67,17 @@
           <label for="">Prix</label>
           <input type="number" v-model="form.price" />
         </div>
+
         <div>
           <input
-            type="radio"
+            type="checkbox"
             id="contactChoice1"
             name="contact"
             value="true"
             v-model="form.promotion"
           />
           <label for="contactChoice1">Mettre en promo</label>
-          <input
-            type="radio"
-            id="contactChoice2"
-            name="contact"
-            value="boolean"
-            v-model="form.promotion"
-          />
-          <label for="contactChoice2">Ne pas mettre en promo</label>
-          <button class="btn btn-info">Ajouter le produit</button>
+          <button type="submit" class="btn btn-info">Ajouter le produit</button>
         </div>
       </form>
     </div>
@@ -109,7 +102,9 @@ export default {
       products_filtre: [],
       key_word: "",
       form: {
-        id: "",
+        id: {
+          type: Number,
+        },
         name: "",
         price: "",
         promotion: "",
@@ -128,29 +123,31 @@ export default {
       this.products.splice(index, 1);
     },
     on_submit(e) {
-      for (const product of this.products) {
-        if (product.id == this.form.id) {
-          e.preventDefault();
-          alert("Cet identifiant existe déjà veuillez en chosir un autre");
-        }
-      }
-      for (const product of this.products) {
-        if (product.name == this.form.name) {
-          e.preventDefault();
-          alert("Cet article existe déjà veuillez rajouter un autre");
-        }
-      }
-      if (
-        this.form.id == "" ||
-        this.form.name == "" ||
-        this.form.price == "" ||
-        this.form.promotion == ""
-      ) {
+      if (this.form.id == "" || this.form.name == "" || this.form.price == "") {
         e.preventDefault();
         alert("Tous les champs doivent être remplis");
+      } else if (
+        (this.form.id != "" && this.form.name != "") ||
+        this.form.price != ""
+      ) {
+        for (const product of this.products) {
+          if (product.id == this.form.id) {
+            e.preventDefault();
+            alert("Cet identifiant existe déjà veuillez en chosir un autre");
+          }
+        }
+        for (const product of this.products) {
+          if (product.name == this.form.name) {
+            e.preventDefault();
+            alert("Cet article existe déjà veuillez rajouter un autre");
+          }
+        }
+        if (!e.preventDefault()) {
+          this.products.push(this.form);
+          console.log("got it");
+        }
       }
-
-      this.products.push(this.form);
+      this.form = {};
     },
   },
   computed: {
