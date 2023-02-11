@@ -53,22 +53,22 @@
         </tr>
       </tbody>
     </table>
-    <div>
-      <form action="" @submit="on_submit">
-        <div>
-          <label for="">Identifiant</label
-          ><input v-model="form.id" type="number" />
+    <div class="container">
+      <form action="" @submit="on_submit" style="width: 500px" class="mb-5">
+        <div class="form-group">
+          <label class="mt-3" for="">Identifiant</label
+          ><input v-model="form.id" type="number" class="form-control" />
         </div>
-        <div>
-          <label for="">Article</label>
-          <input type="text" v-model="form.name" />
+        <div class="form-group">
+          <label class="mt-3" for="">Article</label>
+          <input type="text" v-model="form.name" class="form-control" />
         </div>
-        <div>
-          <label for="">Prix</label>
-          <input type="number" v-model="form.price" />
+        <div class="form-group">
+          <label class="mt-3" for="">Prix</label>
+          <input type="number" v-model="form.price" class="form-control" />
         </div>
 
-        <div>
+        <div class="form-group">
           <input
             type="checkbox"
             id="contactChoice1"
@@ -76,8 +76,8 @@
             value="true"
             v-model="form.promotion"
           />
-          <label for="contactChoice1">Mettre en promo</label>
-          <button class="btn btn-info">Ajouter le produit</button>
+          <label for="contactChoice1" class="mt-2">Mettre en promo</label>
+          <button class="btn btn-info m-2">Ajouter le produit</button>
         </div>
       </form>
     </div>
