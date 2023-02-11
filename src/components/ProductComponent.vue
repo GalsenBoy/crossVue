@@ -54,7 +54,7 @@
       </tbody>
     </table>
     <div>
-      <form action="" @submit="on_submit($event)">
+      <form action="" @submit="on_submit">
         <div>
           <label for="">Identifiant</label
           ><input v-model="form.id" type="number" />
@@ -77,7 +77,7 @@
             v-model="form.promotion"
           />
           <label for="contactChoice1">Mettre en promo</label>
-          <button type="submit" class="btn btn-info">Ajouter le produit</button>
+          <button class="btn btn-info">Ajouter le produit</button>
         </div>
       </form>
     </div>
@@ -102,9 +102,7 @@ export default {
       products_filtre: [],
       key_word: "",
       form: {
-        id: {
-          type: Number,
-        },
+        id: "",
         name: "",
         price: "",
         promotion: "",
@@ -114,40 +112,32 @@ export default {
   methods: {
     reversePromo(product) {
       this.selected = this.products.find((item) => item.id === product.id);
-      // console.log(this.selected);
       this.selected.promotion = !this.selected.promotion;
     },
-
     delete_product(index) {
-      // console.log(index);
       this.products.splice(index, 1);
     },
     on_submit(e) {
-      if (this.form.id == "" || this.form.name == "" || this.form.price == "") {
-        e.preventDefault();
+      if (this.form.name && this.form.price) {
+        for (const product of this.products) {
+          if (this.form.id == product.id) {
+            alert("Cet identifiant existe déjà");
+            return false;
+          }
+        }
+        for (const product of this.products) {
+          if (this.form.name == product.name) {
+            alert("Cet article existe déjà");
+            return false;
+          }
+        }
+        this.products.push(this.form);
+      }
+      if (!this.form.name || !this.form.price) {
         alert("Tous les champs doivent être remplis");
-      } else if (
-        (this.form.id != "" && this.form.name != "") ||
-        this.form.price != ""
-      ) {
-        for (const product of this.products) {
-          if (product.id == this.form.id) {
-            e.preventDefault();
-            alert("Cet identifiant existe déjà veuillez en chosir un autre");
-          }
-        }
-        for (const product of this.products) {
-          if (product.name == this.form.name) {
-            e.preventDefault();
-            alert("Cet article existe déjà veuillez rajouter un autre");
-          }
-        }
-        if (!e.preventDefault()) {
-          this.products.push(this.form);
-          console.log("got it");
-        }
       }
       this.form = {};
+      e.preventDefault();
     },
   },
   computed: {
@@ -157,6 +147,7 @@ export default {
       });
     },
   },
+  product: {},
 };
 </script>
 
