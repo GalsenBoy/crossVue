@@ -53,22 +53,22 @@
         </tr>
       </tbody>
     </table>
-    <div>
-      <form action="" @submit="on_submit($event)">
-        <div>
-          <label for="">Identifiant</label
-          ><input v-model="form.id" type="number" />
+    <div class="container">
+      <form action="" @submit="on_submit" style="width: 500px" class="mb-5">
+        <div class="form-group">
+          <label class="mt-3" for="">Identifiant</label
+          ><input v-model="form.id" type="number" class="form-control" />
         </div>
-        <div>
-          <label for="">Article</label>
-          <input type="text" v-model="form.name" />
+        <div class="form-group">
+          <label class="mt-3" for="">Article</label>
+          <input type="text" v-model="form.name" class="form-control" />
         </div>
-        <div>
-          <label for="">Prix</label>
-          <input type="number" v-model="form.price" />
+        <div class="form-group">
+          <label class="mt-3" for="">Prix</label>
+          <input type="number" v-model="form.price" class="form-control" />
         </div>
 
-        <div>
+        <div class="form-group">
           <input
             type="checkbox"
             id="contactChoice1"
@@ -76,8 +76,8 @@
             value="true"
             v-model="form.promotion"
           />
-          <label for="contactChoice1">Mettre en promo</label>
-          <button type="submit" class="btn btn-info">Ajouter le produit</button>
+          <label for="contactChoice1" class="mt-2">Mettre en promo</label>
+          <button class="btn btn-info m-2">Ajouter le produit</button>
         </div>
       </form>
     </div>
@@ -102,9 +102,7 @@ export default {
       products_filtre: [],
       key_word: "",
       form: {
-        id: {
-          type: Number,
-        },
+        id: "",
         name: "",
         price: "",
         promotion: "",
@@ -114,40 +112,57 @@ export default {
   methods: {
     reversePromo(product) {
       this.selected = this.products.find((item) => item.id === product.id);
-      // console.log(this.selected);
       this.selected.promotion = !this.selected.promotion;
     },
-
     delete_product(index) {
-      // console.log(index);
-      this.products.splice(index, 1);
+      const confirmation = confirm("Voulez-vous vraiment supprimer ce produit");
+      if (confirmation) {
+        this.products.splice(index, 1);
+        this.on_update();
+      }
     },
     on_submit(e) {
-      if (this.form.id == "" || this.form.name == "" || this.form.price == "") {
-        e.preventDefault();
+      if (this.form.name && this.form.price) {
+        for (const product of this.products) {
+          if (this.form.id == product.id) {
+            alert("Cet identifiant existe déjà");
+            return false;
+          }
+        }
+        for (const product of this.products) {
+          if (this.form.name == product.name) {
+            alert("Cet article existe déjà");
+            return false;
+          }
+        }
+        this.products.push(this.form);
+        this.on_update();
+        // localStorage.setItem("products", JSON.stringify(this.products));
+      }
+      if (!this.form.name || !this.form.price) {
         alert("Tous les champs doivent être remplis");
-      } else if (
-        (this.form.id != "" && this.form.name != "") ||
-        this.form.price != ""
-      ) {
-        for (const product of this.products) {
-          if (product.id == this.form.id) {
-            e.preventDefault();
-            alert("Cet identifiant existe déjà veuillez en chosir un autre");
-          }
-        }
-        for (const product of this.products) {
-          if (product.name == this.form.name) {
-            e.preventDefault();
-            alert("Cet article existe déjà veuillez rajouter un autre");
-          }
-        }
-        if (!e.preventDefault()) {
-          this.products.push(this.form);
-          console.log("got it");
-        }
       }
       this.form = {};
+      e.preventDefault();
+    },
+    on_update() {
+      localStorage.setItem("produits", JSON.stringify(this.products));
+    },
+  },
+  created() {
+    // Récupérer les produits stockés dans localStorage
+    const storedProducts = localStorage.getItem("products");
+    if (storedProducts) {
+      this.products = JSON.parse(storedProducts);
+    }
+  },
+  watch: {
+    products: {
+      handler() {
+        // Mettre à jour les produits dans localStorage lorsque la propriété products change
+        localStorage.setItem("products", JSON.stringify(this.products));
+      },
+      deep: true,
     },
   },
   computed: {
@@ -157,6 +172,7 @@ export default {
       });
     },
   },
+  product: {},
 };
 </script>
 
