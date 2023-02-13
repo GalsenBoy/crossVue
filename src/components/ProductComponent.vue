@@ -115,7 +115,11 @@ export default {
       this.selected.promotion = !this.selected.promotion;
     },
     delete_product(index) {
-      this.products.splice(index, 1);
+      const confirmation = confirm("Voulez-vous vraiment supprimer ce produit");
+      if (confirmation) {
+        this.products.splice(index, 1);
+        this.on_update();
+      }
     },
     on_submit(e) {
       if (this.form.name && this.form.price) {
@@ -132,12 +136,33 @@ export default {
           }
         }
         this.products.push(this.form);
+        this.on_update();
+        // localStorage.setItem("products", JSON.stringify(this.products));
       }
       if (!this.form.name || !this.form.price) {
         alert("Tous les champs doivent être remplis");
       }
       this.form = {};
       e.preventDefault();
+    },
+    on_update() {
+      localStorage.setItem("produits", JSON.stringify(this.products));
+    },
+  },
+  created() {
+    // Récupérer les produits stockés dans localStorage
+    const storedProducts = localStorage.getItem("products");
+    if (storedProducts) {
+      this.products = JSON.parse(storedProducts);
+    }
+  },
+  watch: {
+    products: {
+      handler() {
+        // Mettre à jour les produits dans localStorage lorsque la propriété products change
+        localStorage.setItem("products", JSON.stringify(this.products));
+      },
+      deep: true,
     },
   },
   computed: {
