@@ -57,7 +57,12 @@
       <form action="" @submit="on_submit" style="width: 500px" class="mb-5">
         <div class="form-group">
           <label class="mt-3" for="">Identifiant</label
-          ><input v-model="form.id" type="number" class="form-control" />
+          ><input
+            v-model="form.id"
+            type="number"
+            class="form-control"
+            min="1"
+          />
         </div>
         <div class="form-group">
           <label class="mt-3" for="">Article</label>
@@ -65,7 +70,12 @@
         </div>
         <div class="form-group">
           <label class="mt-3" for="">Prix</label>
-          <input type="number" v-model="form.price" class="form-control" />
+          <input
+            type="number"
+            v-model="form.price"
+            class="form-control"
+            min="1"
+          />
         </div>
 
         <div class="form-group">
@@ -145,6 +155,7 @@ export default {
       this.form = {};
       e.preventDefault();
     },
+
     on_update() {
       localStorage.setItem("produits", JSON.stringify(this.products));
     },
