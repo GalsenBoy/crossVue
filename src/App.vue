@@ -1,15 +1,18 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
- <ProductComponent />
+  <nav>
+    <router-link to="/">Accueil</router-link>
+  </nav>
+  <router-view/>
 </template>
 
 <script>
-import ProductComponent from './components/ProductComponent.vue'
+
 
 export default {
   name: 'App',
   components: {
-    ProductComponent
+   
   }
 }
 </script>

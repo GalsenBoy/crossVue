@@ -74,7 +74,8 @@
             type="number"
             v-model="form.price"
             class="form-control"
-            min="1"
+            min="0"
+            step="0.1"
           />
         </div>
 
