@@ -2,7 +2,7 @@
   <img alt="Vue logo" src="./assets/logo.png">
   <nav class="m-5">
     <router-link to="/"><button class="btn btn-info">Accueil</button></router-link> |
-    <router-link to="/product"><button class="btn btn-success">Ma liste de produit</button></router-link> |
+    <router-link to="/produit"><button class="btn btn-success">Ma liste de produit</button></router-link> |
     <router-link to="/api"><button class="btn btn-warning">Api gouv</button></router-link>
   </nav>
   <router-view/>

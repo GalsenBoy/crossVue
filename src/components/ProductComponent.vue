@@ -5,14 +5,8 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">Mot clé</span>
       </div>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="ordinateur"
-        aria-label="ordinateur"
-        aria-describedby="basic-addon1"
-        v-model="key_word"
-      />
+      <input type="text" class="form-control" placeholder="ordinateur" aria-label="ordinateur"
+        aria-describedby="basic-addon1" v-model="key_word" />
     </div>
 
     <table class="table">
@@ -32,15 +26,10 @@
           <td>{{ product.name }}</td>
           <td>{{ product.price }} €</td>
           <td>
-            <span v-if="product.promotion"
-              ><i class="bi bi-heart-fill text-success"></i
-            ></span>
+            <span v-if="product.promotion"><i class="bi bi-heart-fill text-success"></i></span>
           </td>
           <td>
-            <button
-              :class="product.promotion ? 'btn btn-danger' : 'btn btn-success'"
-              @click="reversePromo(product)"
-            >
+            <button :class="product.promotion ? 'btn btn-danger' : 'btn btn-success'" @click="reversePromo(product)">
               <span v-if="product.promotion"> Enlever la promo</span>
               <span v-if="!product.promotion">Mettre en promo</span>
             </button>
@@ -56,13 +45,8 @@
     <div class="container">
       <form action="" @submit="on_submit" style="width: 500px" class="mb-5">
         <div class="form-group">
-          <label class="mt-3" for="">Identifiant</label
-          ><input
-            v-model="form.id"
-            type="number"
-            class="form-control"
-            min="1"
-          />
+          <label class="mt-3" for="">Identifiant</label><input v-model="form.id" type="number" class="form-control"
+            min="1" />
         </div>
         <div class="form-group">
           <label class="mt-3" for="">Article</label>
@@ -70,23 +54,11 @@
         </div>
         <div class="form-group">
           <label class="mt-3" for="">Prix</label>
-          <input
-            type="number"
-            v-model="form.price"
-            class="form-control"
-            min="0"
-            step="0.01"
-          />
+          <input type="number" v-model="form.price" class="form-control" min="0" step="0.01" />
         </div>
 
         <div class="form-group">
-          <input
-            type="checkbox"
-            id="contactChoice1"
-            name="contact"
-            value="true"
-            v-model="form.promotion"
-          />
+          <input type="checkbox" id="contactChoice1" name="contact" value="true" v-model="form.promotion" />
           <label for="contactChoice1" class="mt-2">Mettre en promo</label>
           <button class="btn btn-info m-2">Ajouter le produit</button>
         </div>
@@ -156,7 +128,6 @@ export default {
       this.form = {};
       e.preventDefault();
     },
-
     on_update() {
       localStorage.setItem("produits", JSON.stringify(this.products));
     },
