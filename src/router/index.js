@@ -2,6 +2,7 @@ import { createRouter,createWebHistory } from "vue-router";
 import FirstView from '@/views/FirstView.vue';
 import ProductComponent from '@/components/ProductComponent.vue';
 import NotFoundVue from "@/views/NotFound.vue";
+import CommuneCompont from "@/components/CommuneCompont.vue";
 import ApiComponent from "@/components/ApiComponent.vue";
 
 const routes = [
@@ -36,6 +37,14 @@ const routes = [
         component:NotFoundVue,
         meta:{
             title:"La page n'existe pas"
+        }
+    },
+    {
+        name:'Commune',
+        path:'/commune',
+        component:CommuneCompont,
+        meta:{
+            title:"Recherche commune"
         }
     }
 ]
