@@ -18,13 +18,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(department, index) in departments" :key="index">
+                <tr v-for="(department, index) in filterDepartment" :key="index">
                     <td>{{ department.code }}</td>
                     <td>{{ department.nom }}</td>
                     <td>{{ department.codeRegion }}</td>
                 </tr>
             </tbody>
         </table>
+        <VPagination v-model="page" :pages="10" :range-size="1" active-color="#DCEDFF" @update:modelValue="updateHandler" />
     </div>
 </template>
 
@@ -32,19 +33,39 @@
 
 <script>
 import axios from "axios";
+import VPagination from "@hennge/vue3-pagination";
+import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+
 export default {
+    components: {
+
+    },
     data() {
         return {
             departments: [],
             search_department: '',
+            currentPage: 1,
         };
-
     },
     mounted() {
         axios
             .get("https://geo.api.gouv.fr/departements")
             .then((response) => (this.departments = response.data));
     },
+
+    methods: {
+        onPageChange(page) {
+            console.log(page)
+            this.currentPage = page;
+        },
+    },
+    computed: {
+        filterDepartment() {
+            return this.departments.filter((department) => {
+                return department.nom.toLowerCase().includes(this.search_department.toLowerCase())
+            })
+
+        }
+    }
 };
 </script>
-  
